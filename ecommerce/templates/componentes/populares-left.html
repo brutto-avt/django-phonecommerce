@@ -1,0 +1,25 @@
+{% load produtos_tags %}
+{% get_populares 3 %}
+
+{% if populares %}
+	<div class="widget list-widget no-bullets">
+		<h2>Populares</h2>
+		<ul>
+			{% for p in populares %}
+				<li>
+			 		<a href="{{ p.get_absolute_url }}">
+		 	 		<img src="{{ p.thumb.url }}" alt="{{ p.nome }}" {% if user.is_authenticated %}class="drag" rev="{% url 'adicionar_ao_carrinho' p.slug %}"{% endif %} />
+		 	 		<b>{{ p.nome }}</b>
+		 	 		<small>
+		 	 			{% if p.preco_desconto %}
+		 	 				<span class="desconto">De R$ {{ p.preco|floatformat:2 }}</span> <small>por R$ {{ p.preco_desconto }}</small>
+		 	 			{% else %}
+		 	 				<span>R$ {{ p.preco }}</span>
+		 	 			{% endif %}
+		 	 		</small>
+			 		</a>
+			 	</li>
+		 	{% endfor %}
+		</ul>
+	</div>
+{% endif %}

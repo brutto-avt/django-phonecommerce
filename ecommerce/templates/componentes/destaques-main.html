@@ -1,0 +1,52 @@
+{% load produtos_tags %}
+
+{% get_populares 10 %}
+{% get_ofertas 10 %}
+
+{% if populares or ofertas %}
+<div class="text-widget">
+	<p><b>Bem vindo à Phone Shop.</b><br />
+		Oferecemos uma linha completa de smartphones e tablets das melhores marcas do mercado.
+	</p>
+</div>
+
+<div class="tabbed-widget">
+	<ul class="tabs">
+		{% if ofertas %}<li><a href="#deal-of-day">Ofertas</a></li>{% endif %}
+		{% if populares %}<li><a href="#whats-hot">Populares</a></li>{% endif %}
+	</ul>
+	{% if ofertas %}
+	<div id="deal-of-day" class="tab">
+		<ul class="scrollable">
+			{% for o in ofertas %}
+				<li>
+					<a href="{{ o.get_absolute_url }}">
+						<img src="{{ o.thumb.url }}" alt="{{ o.nome }}" {% if user.is_authenticated %}class="drag" rev="{% url 'adicionar_ao_carrinho' o.slug %}"{% endif %} /></a>
+						<span>
+							<b>{{ o.nome }}</b>
+							<a class="button buy-button" href="{{ o.get_absolute_url }}"><span class="icon">&nbsp;</span>Detalhes</a>
+						</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+
+	{% if populares %}
+	<div id="whats-hot" class="tab">
+		<ul class="scrollable">
+			{% for p in populares %}
+				<li>
+					<a href="{{ p.get_absolute_url }}">
+						<img src="{{ p.thumb.url }}" alt="{{ p.nome }}" {% if user.is_authenticated %}class="drag" rev="{% url 'adicionar_ao_carrinho' p.slug %}"{% endif %} /></a>
+						<span>
+							<b>{{ p.nome }}</b>
+							<a class="button buy-button" href="{{ p.get_absolute_url }}"><span class="icon">&nbsp;</span>Detalhes</a>
+						</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,10 @@
+{% load menus_tags %}
+
+<li>
+	<a {% if classe %}class="{{ classe }}{% if item.classe_css %} {{ item.classe_css }}{%endif %}"{% endif %} href="{{ item.link }}" {% if item.nova_janela %}target="_blank"{% endif %}>{{ item.titulo }}</a>
+	{% if item.filhos %}
+		<ul>
+			{% for filho in item.filhos %}{% item_menu item=filho counter=forloop.counter %}{% endfor %}
+		</ul>
+	{% endif %}
+</li>

@@ -1,0 +1,34 @@
+{% load produtos_tags %}
+{% get_populares 3 %}
+
+{% if populares %}
+	<ul>
+	{% for produto in populares %}
+		<li>
+			<a href="#slide-{{ forloop.counter }}">
+				<img src="{{ produto.thumb.url }}" alt="{{ produto.nome }}" {% if user.is_authenticated %}class="drag" rev="{% url 'adicionar_ao_carrinho' produto.slug %}"{% endif %} />
+				<b>{{ produto.nome }}</b>
+				<small>{{ produto.resumo }}</small>
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+
+	{% for produto in populares %}
+		<div id="slide-{{ forloop.counter }}" class="slide">
+			<span class="strip">
+				<b>{{ produto.nome }}</b>
+				<p>{{ produto.descricao_slider }}</p>
+				<div class="more">
+					<span>R$ {{ produto.get_preco|floatformat:2 }}</span><br />
+					<a class="more-button" href="{{ produto.get_absolute_url }}">Detalhes</a>
+				</div>
+			</span>
+			{% if produto.imagem_slide %}
+				<img src="{{ produto.imagem_slide.url }}" alt="{{ produto.nome }}" />
+			{% else %}
+				<img src="{{ produto.original.url }}" alt="{{ produto.nome }}" />
+			{% endif %}
+		</div>
+	{% endfor %}
+{% endif %}

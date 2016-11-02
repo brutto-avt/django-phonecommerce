@@ -1,0 +1,11 @@
+{% load menus_tags %}
+<div id="top-nav">
+	{% if user and user.is_authenticated %}
+		<a class="button blue logout" href="/logout/">Logout</a>
+	{% else %}
+		<a class="button blue" href="/registro/">Registrar</a>
+		<a class="button orange" href="/login/">Login</a>
+	{% endif %}
+
+	{% menu slug="top" %}
+</div>

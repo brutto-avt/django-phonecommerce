@@ -1,0 +1,13 @@
+{% load menus_tags %}
+
+{% spaceless %}
+{% if menu.classe_css %}
+	<ul id="{{ menu.slug }}" class="{{ menu.classe_css }}">
+{% else %}
+	<ul id="{{ menu.slug }}">
+{% endif %}
+	{% for item in itens %}
+		{% item_menu item=item counter=forloop.counter %}
+	{% endfor %}
+</ul>
+{% endspaceless %}

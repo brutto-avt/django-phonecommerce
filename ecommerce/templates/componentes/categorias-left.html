@@ -1,0 +1,14 @@
+{% load produtos_tags %}
+
+{% get_categorias %}
+
+<div class="widget list-widget">
+	<h2>Categorias</h2>
+	<ul>
+		{% for c in categorias %}
+			{% if not c.vazia %}
+				<li><a href="{{ c.get_absolute_url }}">{{ c.nome }}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>

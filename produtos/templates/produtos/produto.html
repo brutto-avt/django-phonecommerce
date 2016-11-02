@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load modulos_tags produtos_tags %}
+
+{% block title %}{{ produto.nome }} - {{ block.super }}{% endblock %}
+{% block page_class%}class="no_slider no_padding detail"{% endblock %}
+{% block main_class %}grid-70 prefix-5{% endblock %}
+
+{% block left-bar %}
+	{% get_componentes_modulo 'left-bar' 1 %}
+{% endblock %}
+
+{% block main %}
+<div class="data-grid">
+	<h2>{{ produto.nome }}</h2>
+	
+	<a class="fancybox" href="{{ produto.imagem_slide.url }}">
+		<img src="{{ produto.original.url }}" alt="{{ produto.nome }}" title="{{ produto.nome }}"/>
+	</a>
+	
+    <p class="description">{{ produto.descricao }}</p>
+    <p class="price"><b>Preço: R$ {{ produto.get_preco|floatformat:2 }}</b></p>
+	
+	{% if user.is_authenticated %}
+		{% if produto.quantidade_estoque >= 1 %}
+			<form name="adicionar_carrinho" method="post">
+				<label for="quantidade">Quantidade:</label>
+				<input type="number" min="1" max="99" name="quantidade" value="1" />
+				<a rev="adicionar_carrinho" href="{% url 'adicionar_ao_carrinho' produto.slug %}" class="fancybox-ajax button buy-button"><span class="icon">&nbsp;</span>Comprar</a>
+			</form>
+		{% else %}
+			<span class="out">Esgotado</span>
+		{% endif %}
+	{% endif %}
+	
+	{% if produto.detalhes.count > 0 %}
+		<h2>Detalhes:</h2>
+		<ul>
+    	{% for detalhe in produto.detalhes.all %}
+			<li><b>{{ detalhe.atributo.nome }}:</b> {{ detalhe.valor }}</li>
+    	{% endfor %}
+    	</ul>
+    {% endif %}
+    <hr/>
+
+    <p class="more"><a href="{{ produto.categoria.get_absolute_url }}">Mais produtos {{ produto.categoria.nome }}</a></p>
+</div>
+{% endblock %}

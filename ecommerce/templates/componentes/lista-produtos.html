@@ -1,0 +1,24 @@
+{% load pagination_tags %}
+
+{% if produtos %}
+	<div class="feature-widget">
+		<div class="title">
+			<h2>Todos os Aparelhos</h2>
+			{% autopaginate produtos 9 %}
+			{% paginate %}
+		</div>
+
+		<ul class="page">
+			{% for produto in produtos %}
+				<li>
+					<a href="{{ produto.get_absolute_url }}"><img src="{{ produto.thumb.url }}" alt="{{ produto.nome }}" {% if user.is_authenticated %}class="drag" rev="{% url 'adicionar_ao_carrinho' produto.slug %}"{% endif %} /></a>
+					<span>
+						<b>{{ produto.nome }}</b><br />
+						<small>R$ {{ produto.get_preco|floatformat:2 }}</small><br />
+						<a class="button buy-button" href="{{ produto.get_absolute_url }}"><span class="icon">&nbsp;</span>Detalhes</a>
+					</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}

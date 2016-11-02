@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Meu carrinho - {{ block.super }}{% endblock %}
+{% block extra_css %}
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ MEDIA_URL }}css/ui-lightness/jquery-ui-1.9.2.custom.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/ui.jqgrid.css" />	
+{% endblock %}
+{% block page_class %}class="no_slider no_padding detail"{% endblock %}
+
+{% block main_class %}grid-100{% endblock %}
+
+{% block main %}
+<div id="dialog" style="display:none;">Finalizar o pedido irá esvaziar seu carrinho.<br/>Deseja continuar?</div>
+
+<div class="data-grid jsGrid">
+	<h2>Meu carrinho</h2>
+	{% if not carrinho.vazio %}	
+		<table id="carrinho-grid"><tr><td/></tr></table>
+		<div id="pager"></div>
+		
+		<p class="total"><b>Total de produtos:</b> <span>R$ {{ carrinho.valor_total|floatformat:2 }}</span></p>
+		<a id="confirm-order" class="button blue" href="{% url 'finaliza_pedido' %}">Finalizar pedido</a>
+	{% else %}
+		<p>Nenhum item no carrinho.</p>
+		<a class="button blue" href="{% url 'categorias' %}">Ver produtos</a>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+	<script type="text/javascript" src="{{ MEDIA_URL}}js/i18n/grid.locale-pt-br.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL}}js/jquery.jqGrid.min.js"></script>
+{% endblock %}

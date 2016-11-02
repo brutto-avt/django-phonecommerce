@@ -1,0 +1,18 @@
+{% if produtos %}
+	<ul>
+	{% for p in produtos %}
+		<li>
+			<a href="{{ p.get_absolute_url }}">
+				<img src="{{ p.thumb.url }}" alt="{{ p.nome }}" />
+				<span>{{ p.nome }}</span>
+				<b>R$ {{ p.get_preco|floatformat:2 }}</b>
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+	{% if more %}
+		<a class="more-results" href="/loja/busca/?q={{ query }}">Mais resultados<a>
+	{% endif %}
+{% else %}
+	<p>{{ msg }}</p>
+{% endif %}

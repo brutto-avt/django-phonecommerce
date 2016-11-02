@@ -1,0 +1,8 @@
+{% load breadcrumbs_tags %}
+<div id="breadcrumbs">
+	<ul>
+		{% for url in url_dict %}
+			<li><a href="{{ url }}">{{ url_dict|get_key:url }}</a></li>
+		{% endfor %}
+	</ul>
+</div>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load modulos_tags pagination_tags %}
+
+{% block title %}Busca - {{ block.super }}{% endblock %}
+
+{% block page_class %}class="no_slider"{% endblock %}
+
+{% block left-bar %}
+	{% get_componentes_modulo 'left-bar' 1 %}
+{% endblock %}
+
+{% block main %}
+	<div class="feature-widget">
+	{% if produtos %}
+		{% autopaginate produtos 15 %}
+		<div class="title">
+			<h2>Busca</h2>
+			{% paginate %}
+		</div>
+
+		<ul class="page">
+			{% for produto in produtos %}
+			<li>
+				<a href="{{ produto.get_absolute_url }}">
+					<img src="{{ produto.thumb.url }}" title="{{ produto.nome }}" alt="{{ produto.nome }}" {% if user.is_authenticated %}class="drag" rev="{% url 'adicionar_ao_carrinho' produto.slug %}"{% endif %} /></a>
+					<span>
+						<b>{{ produto.nome }}</b><br />
+						<small>R$ {{ produto.get_preco|floatformat:2 }}</small><br />
+						<a class="button buy-button" href="{{ produto.get_absolute_url }}"><span class="icon">&nbsp;</span>Detalhes</a>
+					</span>
+			</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>{{ msg }}</p>
+	{% endif %}
+</div>
+{% endblock %}

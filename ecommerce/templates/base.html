@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load menus_tags modulos_tags produtos_tags breadcrumbs_tags %}
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>{% block title %}PHONE SHOP{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/text.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/unsemantic-grid-responsive.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.mCustomScrollbar.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/fancybox.css" />
+	{% block extra_css %}{% endblock %}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css" />
+	<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" />
+	<link rel="apple-touch-icon" href="{{ MEDIA_URL }}img/favicon.png">
+</head>
+
+<body {% block page_class %}{% endblock %}>
+	{% if user.is_authenticated %}<div id="cart-drop" class="open"></div>{% endif %}
+
+	<div id="header">
+		 <div class="grid-container">
+		 	 <div class="grid-30">
+		 	 	<a id="logo" href="/">PHONE SHOP</a>
+		 	 </div>
+		 	 <div class="grid-50 prefix-20">
+		 	 	{% block header %}
+		 	 		{% get_componentes_modulo 'header' 1 %}
+		 	 	{% endblock %}
+		 	 </div>
+
+		 	 <div id="main-nav" class="grid-100">
+		 	 	{% get_categorias 5 %}
+		 	 	<ul>
+		 	 		<li><a class="home-icon" href="/">Início</a></li>
+		 	 		{% for c in categorias %}
+						<li><a href="{{ c.get_absolute_url }}">{{ c.nome }}</a></li>
+					{% endfor %}
+		 	 	</ul>
+
+		 	 	{% block main-nav %}
+		 	 		{% get_componentes_modulo 'main-nav' 1 %}
+		 	 	{% endblock %}
+		 	 </div>
+
+		 	 {% block slider %}{% endblock %}
+		</div>
+	</div>
+
+	<div id="content" class="grid-container">
+		<div id="left-bar" class="grid-25">
+			{% block left-bar %}{% endblock %}
+		</div>
+
+		<div id="main" class="{% block main_class %}grid-75 {% endblock %}">
+			<!--{% get_breadcrumbs %}-->
+			{% block main %}{% endblock %}
+		</div>
+	</div>
+
+	<div id="footer" class="grid-container">
+		<div class="grid-15 prefix-15">
+			<h3>Newsletter</h3>
+			<p>Receba por e-mail as últimas novidades de nossa loja.</p>
+			<form method="post">
+				<input type="text" id="name" name="name" value="Nome" />
+				<input type="email" id="email" name="email" value="E-mail" />
+				<input class="button orange" type="submit" value="Registrar" />
+			</form>
+		</div>
+
+		<div class="grid-10">
+			<h3>Minha conta</h3>
+			<ul>
+				{% if user.is_authenticated %}
+					<li><a href="/carrinho/">Meu carrinho</a></li>
+					<li><a href="/clientes/">Minha conta</a></li>
+					<li><a href="/logout/">Logout</a></li>
+				{% else %}
+					<li><a href="/login/">Login</a></li>
+					<li><a href="/registro/">Registrar</a></li>
+				{% endif %}
+			</ul>
+		</div>
+
+		<div class="grid-10">
+			<h3>Segurança</h3>
+			<ul>
+				<li><a href="#">Compra segura</a></li>
+				<li><a href="#">Política de privacidade</a></li>
+				<li><a href="#">Nossas políticas</a></li>
+			</ul>
+		</div>
+
+		<div class="grid-10">
+			<h3>Links rápidos</h3>
+			<ul>
+				<li><a href="/">Início</a></li>
+				<li><a href="/contato/">Contato</a></li>
+			</ul>
+		</div>
+
+		<div class="grid-20">
+			<h3>Siga-nos</h3>
+			<ul class="follow">
+				<li><a href="#"><img src="{{ MEDIA_URL }}img/rss.png" /></a></li>
+				<li><a href="#"><img src="{{ MEDIA_URL }}img/twitter.png" /></a></li>
+				<li><a href="#"><img src="{{ MEDIA_URL }}img/facebook.png" /></a></li>
+				<li><a href="#"><img src="{{ MEDIA_URL }}img/skype.png" /></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-tabs-rotate.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.fancybox.pack.js"></script>
+	{% block extra_js %}{% endblock %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/base.js"></script>
+</body>
+</html>

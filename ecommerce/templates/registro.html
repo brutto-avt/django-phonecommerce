@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Registro - {{ block.super }}{% endblock %}
+
+{% block page_class %}class="no_slider no_padding"{% endblock %}
+
+{% block main_class %}grid-100{% endblock %}
+
+{% block main %}
+<div class="data-list">
+	<h2>Registro</h2>
+	{% if mensagem %}
+		<p>{{ mensagem }}
+	{% else %}
+		<form method="post" class="contact-form">{% csrf_token %}
+			<span class="info">Informe seus dados abaixo:</span>
+				{{ form.as_p }}
+			<td><input type="submit" class="button blue" value="Enviar" /></td>
+		</form>
+	{% endif %}
+</div>
+{% endblock %}

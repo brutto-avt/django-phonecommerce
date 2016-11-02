@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load modulos_tags %}
+
+
+{% block slider %}
+<div id="slider" class="grid-100">
+	{% get_componentes_modulo 'slider' 1 %}
+</div>
+{% endblock %}
+
+{% block left-bar %}
+	{% get_componentes_modulo 'left-bar' 1 %}
+{% endblock %}
+
+{% block main %}
+	{% get_componentes_modulo 'main' 1 %}
+{% endblock %}

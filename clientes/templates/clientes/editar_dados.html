@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Dados de entrega - {{ block.super }}{% endblock %}
+
+{% block page_class%}class="no_slider no_padding"{% endblock %}
+
+{% block main_class %}grid-100{% endblock %}
+{% block main %}
+<form class="data-list" method="post">{% csrf_token %}
+	<h2>Dados de entrega</h2>
+	<p class="info">Para comprar produtos em nossa loja, você deve informar seus dados de entrega abaixo.</p>
+	<table class="form">
+		{{ form }}
+	</table>
+	<input type="submit" class="button blue" value="Gravar" />
+</form>
+{% endblock %}
